@@ -601,7 +601,7 @@
                                                                                 {{ $t("Use_Plural_Food_Simple") }}
                                                                             </button>
 
-                                                                    
+
                                                                     <button type="button" class="dropdown-item"
                                                                             @click="copyTemplateReference(index, ingredient)">
                                                                         <i class="fas fa-code"></i>
@@ -1076,12 +1076,19 @@ export default {
                 always_use_plural_unit: false,
                 always_use_plural_food: false,
                 original_text: null,
+                is_null() {
+                    return this.food == null &&
+                        this.amount == 0 &&
+                        (this.unit == null || this.unit.name == window.DEFAULT_UNIT) &&
+                        this.note == "" &&
+                        this.order == 0
+                }
             })
             this.sortIngredients(step)
             this.$nextTick(() => document.getElementById(`amount_${this.recipe.steps.indexOf(step)}_${step.ingredients.length - 1}`).select())
         },
         removeIngredient: function (step, ingredient) {
-            if (confirm(this.$t("confirm_delete", {object: this.$t("Ingredient")}))) {
+            if (ingredient.is_null() || confirm(this.$t("confirm_delete", {object: this.$t("Ingredient")}))) {
                 step.ingredients = step.ingredients.filter((item) => item !== ingredient)
             }
         },
