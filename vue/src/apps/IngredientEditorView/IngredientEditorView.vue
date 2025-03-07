@@ -47,10 +47,12 @@
                         ref="unit_multiselect"
                         :initial_single_selection="unit"
                         :multiple="false"
-                        style="flex-grow: 1; flex-shrink: 1; flex-basis: 0"></generic-multiselect>
+                                                         :create_placeholder="$t('Create')"
+                                                         :multiple="false"
+                                                         :allow_empty="true"></generic-multiselect>
 
                     <b-input-group-append>
-                        <b-dropdown no-caret right :disabled="unit === null">
+                        <b-dropdown no-caret right :disabled="!unit">
                             <template #button-content>
                                 <i class="fas fa-ellipsis-v"></i>
                             </template>
@@ -69,6 +71,8 @@
                             </b-dropdown-item>
 
                         </b-dropdown>
+                    </b-input-group-append>
+                </b-input-group>
                     </b-input-group-append>
                 </b-input-group>
 
@@ -130,7 +134,8 @@
                                                          :search_on_load="false"
                                                          :allow_create="true"
                                                          :create_placeholder="$t('Create')"
-                                                         :multiple="false"></generic-multiselect>
+                                                         :multiple="false"
+                                                          :allow_empty="true"></generic-multiselect>
                                 </td>
                                 <td>
                                     <generic-multiselect @change="i.food = $event.val; $set(i, 'changed', true)"
